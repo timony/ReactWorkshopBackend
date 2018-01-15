@@ -51,5 +51,12 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
 
     //TEST
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.spockframework:spock-core'
+    testCompile 'org.spockframework:spock-spring'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+    testRuntime 'cglib:cglib-nodep:3.2.5'
+
+
 }

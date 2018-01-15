@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,13 @@ public class CustomerService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public CustomerResponse getCustomer(Long id) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id));
+        return toCustomerResponse(customer);
+    }
+
     @Transactional
     public CustomerResponse createCustomer(NewCustomerRequest customerRequest) {
         Customer customer = new Customer();
@@ -33,7 +42,7 @@ public class CustomerService {
         customer.setLastname(customerRequest.getLastname());
         customer.setEmail(customerRequest.getEmail());
         customer.setEnabled(false);
-        customer.setRegistrationDate(new Date());
+        customer.setRegistrationDate(LocalDateTime.now());
         Customer persisted = customerRepository.save(customer);
 
         return toCustomerResponse(persisted);

@@ -1,11 +1,12 @@
 package com.tieto.mikactom.reactworkshop.backend.customer;
 
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -33,9 +34,8 @@ public class Customer {
 
     private Boolean enabled = false;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @NotNull
-    private Date registrationDate;
+    private LocalDateTime registrationDate;
 
     public Long getId() {
         return id;
@@ -85,11 +85,11 @@ public class Customer {
         this.enabled = enabled;
     }
 
-    public Date getRegistrationDate() {
+    public LocalDateTime getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
     }
 }

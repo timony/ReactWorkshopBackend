@@ -7,6 +7,10 @@ spring:
   mvc:
     dispatch-options-request: true
 
+app:
+  route:
+    path: /com/tieto/mikactom/reactworkshop
+
 logging:
   level:
     org:
