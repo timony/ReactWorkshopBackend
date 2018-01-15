@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: false
+  mvc:
+    dispatch-options-request: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
