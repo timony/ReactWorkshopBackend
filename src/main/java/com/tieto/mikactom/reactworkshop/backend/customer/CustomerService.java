@@ -38,9 +38,9 @@ public class CustomerService {
     @Transactional
     public CustomerResponse createCustomer(NewCustomerRequest customerRequest) {
         Customer customer = new Customer();
-        customer.setFirstname(customerRequest.getFirstname());
-        customer.setLastname(customerRequest.getLastname());
-        customer.setEmail(customerRequest.getEmail());
+        customer.setFirstname(customerRequest.getFirstname().get());
+        customer.setLastname(customerRequest.getLastname().get());
+        customer.setEmail(customerRequest.getEmail().get());
         customer.setEnabled(false);
         customer.setRegistrationDate(LocalDateTime.now());
         Customer persisted = customerRepository.save(customer);
