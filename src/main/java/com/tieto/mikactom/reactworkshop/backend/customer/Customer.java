@@ -29,6 +29,7 @@ public class Customer {
     @Size(min = 1, max = 255)
     private String lastname;
 
+    @NotNull
     @Email
     private String email;
 

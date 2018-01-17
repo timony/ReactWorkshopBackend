@@ -1,11 +1,16 @@
 package com.tieto.mikactom.reactworkshop.backend.customer
 
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tieto.mikactom.reactworkshop.backend.ControllerIntegrationTest
+import com.tieto.mikactom.reactworkshop.backend.common.response.RestResponse
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 class CustomerControllerIntegrationTest extends ControllerIntegrationTest {
@@ -38,7 +43,7 @@ class CustomerControllerIntegrationTest extends ControllerIntegrationTest {
         given:
         def inDb = customerRepository.findAllByOrderByLastname().stream()
                 .findFirst()
-                .orElseThrow({return new IllegalStateException("No records in the database")})
+                .orElseThrow({ return new IllegalStateException("No records in the database") })
 
         when:
         def response = mockMvc.perform(
@@ -63,5 +68,24 @@ class CustomerControllerIntegrationTest extends ControllerIntegrationTest {
         then:
         //TODO timony: get rid of it
         1 == 1
+    }
+
+    def 'should create new customer'() {
+        def newCustomer = ImmutableNewCustomerRequest.builder().firstname('A').lastname('B')
+                .email('c@d.com').build()
+        def newCustomerString = objectMapper.writeValueAsString(newCustomer)
+        when:
+        def response = mockMvc.perform(
+                post("${getContextPath()}/customer")
+                        .content(newCustomerString)
+                .header("Content-Type", "application/json")
+        )
+                .andExpect(status().isCreated())
+                .andReturn().response
+
+        then:
+        //TODO timony: check response body
+        response != null
+
     }
 }
